@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NG天气</title>
+    <script src='./libs/angular.min.js'></script>
+</head>
+<body ng-app='weather'>
+<!--<div ng-controller="myctrl">-->
+<!--<table>-->
+<!--<tr ng-repeat="we in weatherData">-->
+<!--<td>{{we.date}}</td>-->
+<!--<td>{{we.temperature}}</td>-->
+<!--<td>{{we.weather}}</td>-->
+<!--<td>{{we.wind}}</td>-->
+<!--<td><img ng-src="{{we.dayPictureUrl}}" alt=""></td>-->
+<!--<td><img ng-src="{{we.nightPictureUrl}}" alt=""></td>-->
+<!--</tr>-->
+<!--</table>-->
+<!--</div>-->
+<div ng-controller='myctrl'>
+    <table>
+        <tr ng-repeat= 'we in weatherData'>
+            <td>{{we.date}}</td>
+            <td>{{we.temperature}}</td>
+            <td>{{we.weather}}</td>
+            <td>{{we.wind}}</td>
+            <td><img ng-src="{{we.dayPictureUrl}}" alt=""></td>
+            <td><img ng-src="{{we.nightPictureUrl}}" alt=""></td>
+        </tr>
+    </table>
+
+    <button ng-click='get()'>点击得到</button>
+    <h1>{{wed[0].date}}</h1>
+</div>
+
+
+
+<script>
+    var weather = angular.module('weather', []);
+
+    weather.controller('myctrl', ['$scope','$http','$log',function ($scope,$http,$log) {
+        $http({
+            url : 'http://api.map.baidu.com/telematics/v3/weather',
+            method : 'jsonp',
+            params : {
+                location : '天津',
+                output : 'json',
+                ak : '0A5bc3c4fb543c8f9bc54b77bc155724',
+                callback : 'JSON_CALLBACK',
+            }
+
+        }).success (function (info) {
+            $log.info(info);
+            $scope.weatherData = info.results[0].weather_data;
+            console.log($scope.weatherData);
+        })
+
+
+
+        $scope.get = function () {
+            $http({
+                url : 'http://api.map.baidu.com/telematics/v3/weather',
+                method : 'jsonp',
+                params : {
+                    location : '天津',
+                    output : 'json',
+                    ak : '0A5bc3c4fb543c8f9bc54b77bc155724',
+                    callback : 'JSON_CALLBACK',
+                }
+
+            }).success (function (info) {
+//                $log.info(info);
+                $scope.wed = info.results[0].weather_data;
+            })
+        }
+    }])
+
+</script>
+</body>
+</html>

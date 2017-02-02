@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body ng-app="">
+点击复选框选择 BMW 选项:
+<input type="checkbox" ng-model="mySel">
+
+<p>我喜欢的车:</p>
+
+<select>
+    <option>Volvo</option>
+    <option ng-selected="mySel">BMW</option>
+    <option>Ford</option>
+</select>
+
+</body>
+</html>

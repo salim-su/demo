@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demo">
+<head>
+	<meta charset="UTF-8">
+	<title>AngularJS 路由和多视图</title>
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+			background-color: #F7F7F7;
+			font-family: Arial;
+		}
+
+		.wrapper {
+			max-width: 980px;
+			margin: 50px auto;
+		}
+
+		ul {
+			padding: 0;
+			margin: 0;
+			overflow: hidden;
+			list-style: none;
+			background-color: #000;
+			border-radius: 4px;
+		}
+
+		li {
+			float: left;
+			width: 120px;
+			height: 40px;
+			text-align: center;
+			line-height: 40px;
+			font-size: 18px;
+		}
+
+		li.active {
+			background-color: #333;
+		}
+
+		li a {
+			display: block;
+			color: #FFF;
+			text-decoration: none;
+		}
+
+		.content {
+			margin-top: 30px;
+			font-size: 24px;
+			padding: 0 20px;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<!-- 导航菜单 -->
+		<ul>
+			<li class="active">
+				<a href="#/index">Index</a>
+			</li>
+			<li>
+				<a href="#/introduce">Introduce</a>
+			</li>
+			<li>
+				<a href="#/contact">Contact Us</a>
+			</li>
+			<li>
+				<a href="#/list">List</a>
+			</li>
+		</ul>
+		<!-- 内容 -->
+		<div class="content">
+			<!-- 占位符 -->
+			<div ng-view></div>
+		</div>
+
+	</div>
+	<!-- AngularJS核心框架 -->
+	<script src="./libs/angular.min.js"></script>
+	<!-- 路由模块理解成插件 -->
+	<script src="./libs/angular-route.js"></script>
+
+	<script>
+		/*依赖ngRoute模块*/
+        var demo = angular.module('demo', ['ngRoute']);
+		/*需要对路由模块进行配置，使其正常工作*/
+		demo.config(['$routeProvider', function ($routeProvider) {
+            $routeProvider.when('/index', {
+//                template: '<h1>kaka</h1>',
+				templateUrl : './template1.html',//视图
+//                controller: ''
+            }).when('/introduce', {
+                templateUrl : './template2.html'//视图
+//                template: '<h1>ronadlo</h1>',
+//                controller: ''
+            }).when('/list',{
+                templateUrl : './List.html',
+                controller : 'ListController'
+			}).when('/contact',{
+                templateUrl : './contact.html',
+                controller : 'contentctrl'
+            }).otherwise({
+			    redirectTo : '/index'     //默认
+			})
+
+        }])
+		/*列表控制器 */
+        demo.controller('ListController', ['$scope','$http', function ($scope,$http) {
+            /*模型数据*/
+//			$scope.items = ['html','css','js'];
+
+//			服务器数据
+
+			$http({
+			    url : '10-02.php',
+
+			}).success(function (info) {
+                console.log(info);
+                $scope.items = info;
+            })
+
+        }])
+		/*content控制器*/
+        demo.controller('contentctrl', ['$scope','$http', function ($scope,$http) {
+			$http({
+			    url : 'content.php'
+			}).success(function (info) {
+				$scope.content = info;
+            })
+        }])
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>EMS-jquery查询</title>
+	<style type="text/css">
+		#sug{
+			position: absolute;
+			left: 50%;
+			margin-left: -150px;
+			width: 300px;
+			background: lightGreen;
+			height: 40px;
+			text-align: center;
+		}
+		#sug input{
+			margin-top: 10px;
+		}
+		#list{
+			position: absolute;
+			left: 50%;
+			top:50px;
+			width: 200px;
+			margin-left: -150px;
+			height: auto;
+			background: lightBlue;
+			display: none;
+		}
+		#list ul{
+			padding-left: 0px;
+			margin: 0px;
+		}
+		#list ul li{
+			background: lightGray;
+			line-height: 30px;
+			list-style: none;
+			padding-left: 10px;
+			margin-top: 0px;
+			cursor: pointer;
+		}
+		#list ul li.on{
+			background: lightGreen;
+		}
+	</style>
+	<script src="jquery-1.11.1.min.js"></script>
+</head>
+<body>
+<div id="sug">
+	<div>
+		<input type="text" id="keyWord" autocomplete=off>
+		<input type="button" value="百度一下" id="btn">
+	</div>
+</div>
+<div id="list">
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('#keyWord').keyup(function(e){
+			var kd = $('#keyWord').val();
+			var url ='https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd='+kd;
+			querySUG(url);
+		});
+	});
+
+	function querySUG(url){
+		// document.getElementById('list').innerHTML = '';
+		$("#list").html();
+		$.ajax({
+			type : "get",
+			async: true,
+			url : url,
+			dataType : "jsonp",
+			jsonp: "cb",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(默认为:callback)
+			jsonpCallback:"callback",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名(类似：jQuery1102016820125747472048_1450147653563(["zhangsan", "lisi", "wangwu"]);)
+			success : function(data){
+				var tag = '<ul>';
+				for(var i=0;i<data.s.length;i++){
+					tag += '<li>'+data.s[i]+'</li>';
+				}
+				tag += '</ul>';
+				$('#list').html(tag).show();
+				$('#list').find('li').hover(function(){
+					$(this).css('background','lightGreen');
+				},function(){
+					$(this).css('background','lightGray');
+				});
+			},
+			error:function(){
+			    console.log('fail');
+			}
+		});
+		$.ajax({
+			url: '/path/to/file',
+			type: 'default GET (Other values: POST)',
+			dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+			data: {param1: 'value1'},
+		});
+
+		jQuery.ajax({
+		  url: '/path/to/file',
+		  type: 'POST',
+		  dataType: 'xml/html/script/json/jsonp',
+		  data: {param1: 'value1'},
+		  complete: function(xhr, textStatus) {
+		    //called when complete
+		  },
+		  success: function(data, textStatus, xhr) {
+		    //called when successful
+		  },
+		  error: function(xhr, textStatus, errorThrown) {
+		    //called when there is an error
+		  }
+		});
+
+
+
+	}
+</script>
+</body>
+</html>

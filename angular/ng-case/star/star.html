@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ng $http服务</title>
+    <style>
+        .imageArea {
+            display: block;
+            margin:20px auto;
+            border:1px solid #2a6496;
+            width: 200px;;
+            height: 200px;
+        }
+        .textArea {
+            height: 80px;
+            width: 400px;
+            margin:20px auto;
+            border:1px solid #6F0101;
+            line-height:80px;
+            text-align: center;
+        }
+        .btn {
+            display: block;
+            margin:20px auto;
+        }
+    </style>
+    <script src='../libs/angular.min.js'></script>
+</head>
+<body ng-app='demo' ng-controller='myctrl'>
+<div class="imageArea" ng-style='img'></div>
+<!--<img class='imageArea' ng-src='{{img}}' alt="">-->
+<div class="textArea">{{name}}</div>
+
+<input ng-click='getval("baby")' class="btn" type="button" value='baby' >
+<input ng-click='getval("xiaoming")' class="btn" type="button" value='xiaoming'>
+<input ng-click='getval("luhan")' class="btn" type="button" value='luhan'>
+
+<p>{{val}}</p>
+
+<script>
+    var demo = angular.module('demo', []);
+
+    demo.controller('myctrl', ['$scope','$http', function ($scope,$http) {
+
+        $scope.getval = function (value) {
+//            $scope.val = val;
+            $scope.value = value;
+//            console.log($scope.value);
+
+            $http({
+                url : 'ng-star.php',
+                method : 'get',
+                params : {
+                    name : $scope.value
+                }
+            }).success(function (info) {
+                console.log(info);
+//                console.log(info.img);
+//                console.log(info.name);
+                $scope.img = {
+                    'background' : 'url('+info.img+') no-repeat center / cover'
+                };
+                $scope.name = info.name;
+            })
+        }
+
+//        document.querySelector('.textArea').html
+
+
+
+//        $http({
+//            url : 'example.php',
+////            method : 'get',
+//            method : 'post',
+//            headers : {'Content-Type': 'application/x-www-form-urlencoded'},
+//            params : {  //get参数
+//                name :'kaka',
+//                sex : 'man'
+//            },
+//            data : {//post传参
+//                name : 'ronadlo'
+//            }
+//
+//
+//
+//        }).success(function (info) {
+//            console.log(info);
+//        })
+
+
+
+
+
+    }])
+
+
+
+</script>
+</body>
+</html>

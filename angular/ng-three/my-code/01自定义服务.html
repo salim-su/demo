@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-自定义服务</title>
+    <script src='./libs/angular.min.js'></script>
+</head>
+<body bg-app='myctrl'>
+<script>
+    var demo = angular.module('demo', []);
+
+    demo.controller('myctrl', ['$scope', function ($scope) {
+
+    }])
+    /*自定义服务，但依赖于#filter*/
+    demo.factory();
+
+
+
+</script>
+</body>
+</html>

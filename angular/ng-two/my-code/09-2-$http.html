@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$http例子</title>
+    <style>
+        table tr {
+            text-align: center;
+        }
+        td {
+            border:1px solid salmon;
+
+        }
+
+    </style>
+    <script src='./libs/angular.min.js'></script>
+</head>
+<body ng-app='demo'>
+
+<div ng-controller='myctrl'>
+
+    <button ng-click="getDate()">获取数据</button>
+    <table style='border: 1px solid #2aabd2;'>
+        <tr>
+            <td>姓名</td>
+            <td>年龄</td>
+            <td>性别</td>
+            <td>头像</td>
+            <td>专辑</td>
+        </tr>
+
+        <tr ng-repeat='star in stars'>
+            <td>{{star.name}}</td>
+            <td>{{star.age}}</td>
+            <td>{{star.sex}}</td>
+            <td>{{star.photo}}</td>
+            <td>{{star.ablum}}</td>
+        </tr>
+    </table>
+
+</div>
+<script>
+    var demo = angular.module('demo', []);
+
+    demo.controller('myctrl', ['$scope','$http','$log',function ($scope,$http,$log) {
+
+
+
+        $scope.getDate = function () {
+            $http({
+                url : 'stars.php',
+                method : 'get',
+                params : {
+                    name : 'kaka'
+                }
+            }).success(function (info) {
+                $log.info(info);
+                $scope.stars = info;
+            })
+        }
+
+
+    }])
+    
+
+
+</script>
+</body>
+</html>

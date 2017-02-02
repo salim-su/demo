@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<form>
+	<input type="text" placeholder='用户名' id="name">
+	<input type="text" placeholder='年龄' id='age'>
+
+	<input type="button"  value="测试jq_get方法" id='jqGet'>
+</form>
+	<h3></h3>
+</body>
+</html>
+<!-- 导入 -->
+<script type="text/javascript" src='../js/jquery.min.js'></script>
+
+<!-- 自己的代码 -->
+<script type="text/javascript">
+	$(function () {
+		$('#jqGet').on('click', function () {
+			$.ajax({
+			    url : '01.jq_get.php',
+				type : 'post',
+				dataType : 'json',
+				data : {
+			        name : document.querySelector('#name').value,
+					age : document.querySelector('#age').value
+				},
+				success : function (info) {
+                    console.log(info);
+//                    console.log(info.name);
+//                    console.log(info.color);
+					document.querySelector('h3').innerHTML = info.name + info.age;
+
+                }
+
+
+			})
+
+
+			$.get('01.jq_get.php',{name : 'kaka',age : 18}, function (info) {
+                console.log(info.name);
+            },'json')
+        })
+    })
+</script>

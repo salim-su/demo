@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .imageArea {
+            margin:20px auto;
+            border:1px solid #2a6496;
+            width: 200px;;
+            height: 200px;
+        }
+        .textArea {
+            height: 80px;
+            width: 400px;
+            margin:20px auto;
+            border:1px solid #6F0101;
+            line-height:80px;
+            text-align: center;
+        }
+        .btn {
+            display: block;
+            margin:20px auto;
+        }
+    </style>
+    <script src='angular.min.js'></script>
+</head>
+<body ng-app='star' ng-controller='myctrl'>
+<div class="imageArea"></div>
+<div class="textArea"></div>
+
+<input ng-click='getval()' class="btn" type="button" value='baby' >
+<input ng-click='getval()' class="btn" type="button" value='xiaoming'>
+<input ng-click='getval()' class="btn" type="button" value='luhan'>
+
+<p>{{val}}</p>
+<script>
+    var star = angular.module('star', []);
+
+    star.controller('myctrl', ['$scope','$http',function ($scope,$http) {
+        $scope.getval = function () {
+            alert('kaka')
+        }
+
+
+
+
+//        console.log($scope.val);
+//        $http({
+//            url : 'na-star.php',
+//            method : 'post',
+//            headers : {'Content-Type': 'application/x-www-form-urlencoded'},
+//            date :
+//
+//
+//        })
+
+
+    }])
+</script>
+</body>
+</html>
